@@ -1,13 +1,40 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
 import passport, {
   createAccessToken,
   serializeUser,
 } from '../auth-strategies.js';
+import prisma from '../lib/prisma.js';
+
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
-    res.json({ message: 'Registration successful'});
+router.post('/auth/register', async (req, res) => {
+    try {
+        const { fullName, email, password } = req.body;
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        
+        if (existingUser) {
+            return res.status(400).json({ error: 'User is already registered' });
+        }
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        const user =await prisma.user.create({
+            data: {
+                fullName,
+                email,
+                passwordHash,
+                role: 'APPLICANT',
+            },
+        });
+        return res.status(201).json({
+            success: true,
+            message: 'Registration successful',
+            user: serializeUser(user),
+        });
+    } catch (error) {
+        return res.status(500).json({ error: 'An error occurred during registration' });
+    }
 });
 
 router.post('/auth/login',  (req, res, next) => {
