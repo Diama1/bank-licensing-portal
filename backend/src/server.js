@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/API", routes); 
+app.use("/api", routes); 
 
 app.get("/", (req, res) => {
   res.json({ message: "Server running", status: "ok" });
