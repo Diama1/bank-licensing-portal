@@ -57,7 +57,6 @@ router.patch('/:id/request-correction', authenticateAccessToken, authorize(Role.
         return res.json({succcess: true, message: 'Correction requested' ,application});
 
     } catch (error) {
-        console.error('Failed HEEEEERE', error);
         return res.status(500).json({error: 'Failed to request correction'});
     }
 });
