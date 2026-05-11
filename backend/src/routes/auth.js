@@ -9,9 +9,18 @@ import prisma from '../lib/prisma.js';
 
 const router = express.Router();
 
-router.post('/auth/register', async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         const { fullName, email, password } = req.body;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid email format',
+            });
+        }
         const existingUser = await prisma.user.findUnique({ where: { email } });
         
         if (existingUser) {
@@ -37,7 +46,7 @@ router.post('/auth/register', async (req, res) => {
     }
 });
 
-router.post('/auth/login',  (req, res, next) => {
+router.post('/login',  (req, res, next) => {
  passport.authenticate('local', { session: false }, async (err, user, info) => {
     if (err) return next(err);
     
@@ -56,6 +65,10 @@ router.post('/auth/login',  (req, res, next) => {
         user: serializeUser(user),
     });
 })(req, res, next);
+});
+
+router.get('/ping', (req, res) => {
+  res.json({ ok: true });
 });
 
 export default router;  
