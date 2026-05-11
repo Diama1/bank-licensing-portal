@@ -45,6 +45,7 @@ Protected endpoints
 
 ### 1. Install dependencies
 ```bash
+cd backend
 npm install
 ```
 ### 2. Configure environment
@@ -136,4 +137,61 @@ Seed file is used for test accounts
 No manual user setup required
 Workflow is role-based and secure
 Focus is on backend architecture and authorization logic
+
+## Future Improvements
+
+Due to time constraints, the following features were not fully implemented below is how I would have approached them:
+
+### Audit Logging System
+
+For a complete system, every action performed on an application (create, submit, correction request, approval, rejection) would be recorded in an audit log.
+
+Approach:
+
+- Create an AuditLog table in the database
+- Store:
+  - userId
+  - action type (CREATE, SUBMIT, APPROVE, etc.)
+  - applicationId
+  - timestamp
+- Implement middleware or service layer to automatically capture actions
+
+### File Upload System
+
+Applicants would be able to attach supporting documents (financial statements, licenses, etc.).
+
+#### Approach:
+
+- Integrate file upload middleware (e.g. Multer)
+- Store files in:
+  - cloud storage (AWS S3) for production, or
+  - local storage for development
+- Save file metadata in the database linked to applications
+
+### Advanced Workflow Validation Engine
+
+A strict state machine would control all application transitions.
+
+### How it would have been done:
+
+- Define allowed transitions:
+- DRAFT → SUBMITTED
+- SUBMITTED → UNDER_REVIEW
+- UNDER_REVIEW → NEEDS_CORRECTION / APPROVED / REJECTED
+- Enforce transitions in a central service layer
+- Block invalid updates at API level
+
+### Frontend UI
+
+A user interface would be built to interact with the backend system.
+
+#### my approach would have been:
+
+- Build a React (or similar) frontend dashboard
+- Separate views for:
+- Applicants (create/track applications)
+- Reviewers (review and request corrections)
+- Admin (system oversight)
+- Connect via REST API
+
 
