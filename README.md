@@ -4,36 +4,38 @@ A backend API for managing bank licensing applications with authentication, role
 
 ## Project structure 
 
+```
 bank-licensing-portal/
 ├── backend/
 │   ├── prisma/
-│   │   ├── migrations/        # Database migration files
-│   │   ├── schema.prisma      # Prisma schema definition
-│   │   └── seed.js            # Database seeder
+│   │   ├── migrations/         # Database migration files
+│   │   ├── schema.prisma       # Prisma schema definition
+│   │   └── seed.js             # Database seeder
 │   ├── src/
-│   │   ├── controllers/       # Route controllers
+│   │   ├── controllers/        # Route controllers
 │   │   ├── lib/
-│   │   │   └── prisma.js      # Prisma client instance
+│   │   │   └── prisma.js       # Prisma client instance
 │   │   ├── middleware/
-│   │   │   ├── auth.js        # Authentication middleware
-│   │   │   └── role.js        # Role-based access middleware
+│   │   │   ├── auth.js         # Authentication middleware
+│   │   │   └── role.js         # Role-based access middleware
 │   │   ├── routes/
 │   │   │   ├── applications.js # License application routes
-│   │   │   ├── auth.js        # Auth routes
-│   │   │   └── index.js       # Route aggregator
+│   │   │   ├── auth.js         # Auth routes
+│   │   │   └── index.js        # Route aggregator
 │   │   ├── tests/
-│   │   │   ├── auth.test.js   # Auth tests
-│   │   ├── auth-strategies.js # Passport/auth strategies
-│   │   ├── index.js           # App entry point
-│   │   └── server.js          # Server 
-│   ├── .env                   # Environment variables
+│   │   │   ├── auth.test.js    # Auth tests
+│   │   ├── auth-strategies.js  # Passport/auth strategies
+│   │   ├── index.js            # App entry point
+│   │   └── server.js           # Server bootstrap
+│   ├── .env                    # Environment variables
 │   ├── .gitignore
-│   ├── babel.config.json      # Babel configuration
+│   ├── babel.config.json       # Babel configuration
 │   ├── package.json
 │   ├── package-lock.json
-│   ├── prisma.config.ts       # Prisma config
-│   ├── Design_document.md     # Project design notes
-│   └── README.md              # Project documentation
+│   ├── prisma.config.ts        # Prisma config
+│   ├── Design_document.md      # Project design notes
+│   └── README.md               # Project documentation
+```
 
 ## Tech Stack
 
