@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post ('/', authenticateAccessToken, async (req, res) => {
     try {
-        const { userId, businessName, licenseType} = req.body;
+        const {businessName, licenseType} = req.body;
 
         if (!businessName || !licenseType ) {
             return res.status(400).json({error: 'Business name and license type are required'})
@@ -14,7 +14,7 @@ router.post ('/', authenticateAccessToken, async (req, res) => {
 
         const application = await prisma.application.create({
             data: {
-                userId,
+                userId: req.user.id,
                 businessName,
                 licenseType,
             },
