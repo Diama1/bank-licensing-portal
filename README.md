@@ -109,8 +109,8 @@ npm run dev
 Server runs on:
 ```bash
 http://localhost:3000
-How to Test the System
 ```
+## How to Test the System
 
 ### 1. Login (use seeded users)
 ```bash
