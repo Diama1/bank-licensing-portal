@@ -26,6 +26,7 @@ model Application {
   status      ApplicationStatus @default(SUBMITTED)
   businessName String
   licenseType String
+  correctionNote String?
 
 
   createdAt DateTime @default(now())
@@ -43,8 +44,10 @@ enum Role {
 }
 
 enum ApplicationStatus {
+  DRAFT
   SUBMITTED
   UNDER_REVIEW
+  NEEDS_CORRECTION
   APPROVED
   REJECTED
 }
