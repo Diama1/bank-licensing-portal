@@ -52,6 +52,32 @@ bank-licensing-portal/
 - User login (JWT-based)
 - Protected routes using middleware
 
+### File Upload System
+
+Applicants can upload supporting documents as part of their application.
+
+#### Features:
+- Multiple file upload support (up to 5 files per request)
+- File size limit: 5MB per file (server-side enforced)
+- Stores file metadata in database:
+  - fileName
+  - fileType
+  - fileSize
+  - filePath
+- Files are linked to applications
+- Supports versioning:
+  - Each resubmission creates a new version
+  - Previous documents are preserved (audit-safe)
+
+#### Implementation Approach:
+
+- Built using Multer middleware for handling multipart/form-data
+- Files stored locally in `/uploads` directory
+- Prisma used to persist metadata and version history
+- Each file is associated with an application via relational mapping
+
+
+
 ### Roles
 
 - APPLICANT
@@ -62,7 +88,7 @@ bank-licensing-portal/
 
 ### Application Workflow
 
-c- reate an account ( APPLICANT only)
+- create an account ( APPLICANT only)
 - Applicant login
 - Create application (APPLICANT only)
 - Submit application
@@ -160,6 +186,11 @@ Authorization: Bearer <token>
 PATCH /api/applications/:id/submit
 Authorization: Bearer <token>
 ```
+### 7 file Upload
+```bash http
+POST /api/applications/:id/documents
+Authorization: Bearer <token>
+```
 ### Rules Summary
 - Only APPLICANT can create applications
 - Submitted applications are locked
@@ -192,18 +223,6 @@ Approach:
   - applicationId
   - timestamp
 - Implement middleware or service layer to automatically capture actions
-
-### File Upload System
-
-Applicants would be able to attach supporting documents (financial statements, licenses, etc.).
-
-#### Approach:
-
-- Integrate file upload middleware (e.g. Multer)
-- Store files in:
-  - cloud storage (AWS S3) for production, or
-  - local storage for development
-- Save file metadata in the database linked to applications
 
 ### Advanced Workflow Validation Engine
 

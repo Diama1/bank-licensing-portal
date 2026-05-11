@@ -6,6 +6,13 @@ const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'secret';
 
 export const authenticateAccessToken = async (req, res, next) => {
   const authorization = req.get('authorization');
+  
+  if (!authorization) {
+    return res.status(401).json({
+      error: 'Authorization header is required',
+    });
+  }
+
   const [scheme, token] = authorization?.split(' ') || [];
 
   if (scheme !== 'Bearer' || !token) {
