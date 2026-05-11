@@ -2,46 +2,80 @@
 
 A backend API for managing bank licensing applications with authentication, roles, and workflow handling.
 
+## Project structure 
+
+bank-licensing-portal/
+├── backend/
+│   ├── prisma/
+│   │   ├── migrations/        # Database migration files
+│   │   ├── schema.prisma      # Prisma schema definition
+│   │   └── seed.js            # Database seeder
+│   ├── src/
+│   │   ├── controllers/       # Route controllers
+│   │   ├── lib/
+│   │   │   └── prisma.js      # Prisma client instance
+│   │   ├── middleware/
+│   │   │   ├── auth.js        # Authentication middleware
+│   │   │   └── role.js        # Role-based access middleware
+│   │   ├── routes/
+│   │   │   ├── applications.js # License application routes
+│   │   │   ├── auth.js        # Auth routes
+│   │   │   └── index.js       # Route aggregator
+│   │   ├── tests/
+│   │   │   ├── auth.test.js   # Auth tests
+│   │   ├── auth-strategies.js # Passport/auth strategies
+│   │   ├── index.js           # App entry point
+│   │   └── server.js          # Server 
+│   ├── .env                   # Environment variables
+│   ├── .gitignore
+│   ├── babel.config.json      # Babel configuration
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── prisma.config.ts       # Prisma config
+│   ├── Design_document.md     # Project design notes
+│   └── README.md              # Project documentation
+
 ## Tech Stack
 
-Node.js
-Express.js
-Prisma ORM
-PostgreSQL
-JWT Authentication
-## Features Implemented
+- Node.js
+- Express.js
+- Prisma ORM
+- PostgreSQL
+- JWT Authentication
 
-Authentication
-Account creation
-User login (JWT-based)
-Protected routes using middleware
+### Features Implemented
 
-## Roles
+- Authentication
+- Account creation
+- User login (JWT-based)
+- Protected routes using middleware
 
-APPLICANT
-REVIEWER
-COMPLIANCE_OFFICER
-ADMIN
-AUDITOR
+### Roles
 
-## Application Workflow
+- APPLICANT
+- REVIEWER
+- COMPLIANCE_OFFICER
+- ADMIN
+- AUDITOR
 
-create an account ( APPLICANT only)
-Applicant login
-Create application (APPLICANT only)
-Submit application
-Reviewer/compliance officer login
-Request correction (REVIEWER / COMPLIANCE_OFFICER)
-Edit application when correction is requested (APPLICANT only)
-Resubmit application(APPLICANT only)
+### Application Workflow
 
-## Security
+c- reate an account ( APPLICANT only)
+- Applicant login
+- Create application (APPLICANT only)
+- Submit application
+- Reviewer/compliance officer login
+- Request correction (REVIEWER / COMPLIANCE_OFFICER)
+- Edit application when correction is requested (APPLICANT only)
+- Resubmit application(APPLICANT only)
 
-JWT authentication
-Role-based access control
-Protected endpoints
+### Security
 
-## Setup Instructions
+- JWT authentication
+- Role-based access control
+- Protected endpoints
+
+### Setup Instructions
 
 ### 1. Install dependencies
 ```bash
@@ -124,19 +158,20 @@ Authorization: Bearer <token>
 PATCH /api/applications/:id/submit
 Authorization: Bearer <token>
 ```
-## Rules Summary
-Only APPLICANT can create applications
-Submitted applications are locked
-Only NEEDS_CORRECTION allows editing
-All routes require JWT
-Role-based access enforced
-Run Tests
-npm test
+### Rules Summary
+- Only APPLICANT can create applications
+- Submitted applications are locked
+- Only NEEDS_CORRECTION allows editing
+- All routes require JWT
+- Role-based access enforced
+- Run Tests
+- npm test
+
 ## Notes for Reviewers
-Seed file is used for test accounts
-No manual user setup required
-Workflow is role-based and secure
-Focus is on backend architecture and authorization logic
+- Seed file is used for test accounts
+- No manual user setup required
+- Workflow is role-based and secure
+- Focus is on backend architecture and authorization logic
 
 ## Future Improvements
 
@@ -180,6 +215,20 @@ A strict state machine would control all application transitions.
 - UNDER_REVIEW → NEEDS_CORRECTION / APPROVED / REJECTED
 - Enforce transitions in a central service layer
 - Block invalid updates at API level
+
+### Testing (TDD Approach)
+
+Testing was partially implemented using Jest and Supertest to validate core authentication and application workflows.
+
+However, a full Test-Driven Development (TDD) approach was not completed due to time constraints.
+
+#### What would be added with more time:
+1. Full TDD 
+2. Application Workflow Tests
+3. Role-Based Access Tests
+Ensure only allowed roles can access specific endpoints
+Validate unauthorized access returns proper errors (401/403)
+
 
 ### Frontend UI
 
